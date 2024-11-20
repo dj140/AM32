@@ -231,35 +231,62 @@ void UN_TIM_Init(void)
 #ifdef USE_RGB_LED // has 3 color led
 void LED_GPIO_init()
 {
-    LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
+    gpio_init_type gpio_init_struct;
 
     /* GPIO Ports Clock Enable */
-    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+    crm_periph_clock_enable(CRM_GPIOB_PERIPH_CLOCK, TRUE);
 
-    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_8);
-    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
-    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
 
-    GPIO_InitStruct.Pin = LL_GPIO_PIN_8;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+		gpio_init_struct.gpio_pins = GPIO_PINS_8;
+		gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+		gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+		gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+    gpio_init_struct.gpio_pull = GPIO_PULL_UP;
+    gpio_init(GPIOB, &gpio_init_struct);
 
-    GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+		gpio_init_struct.gpio_pins = GPIO_PINS_5;
+		gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+		gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+		gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+    gpio_init_struct.gpio_pull = GPIO_PULL_UP;
+    gpio_init(GPIOB, &gpio_init_struct);
+		
+		gpio_init_struct.gpio_pins = GPIO_PINS_3;
+		gpio_init_struct.gpio_mode = GPIO_MODE_OUTPUT;
+		gpio_init_struct.gpio_drive_strength = GPIO_DRIVE_STRENGTH_STRONGER;
+		gpio_init_struct.gpio_out_type = GPIO_OUTPUT_PUSH_PULL;
+    gpio_init_struct.gpio_pull = GPIO_PULL_UP;
+    gpio_init(GPIOB, &gpio_init_struct);
+		
+//    LL_GPIO_InitTypeDef GPIO_InitStruct = { 0 };
 
-    GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
-    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
-    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
-    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
-    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+//    /* GPIO Ports Clock Enable */
+//    LL_AHB1_GRP1_EnableClock(LL_AHB1_GRP1_PERIPH_GPIOB);
+
+//    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_8);
+//    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_5);
+//    LL_GPIO_ResetOutputPin(GPIOB, LL_GPIO_PIN_3);
+
+//    GPIO_InitStruct.Pin = LL_GPIO_PIN_8;
+//    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+//    GPIO_InitStruct.Pin = LL_GPIO_PIN_5;
+//    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+//    GPIO_InitStruct.Pin = LL_GPIO_PIN_3;
+//    GPIO_InitStruct.Mode = LL_GPIO_MODE_OUTPUT;
+//    GPIO_InitStruct.Speed = LL_GPIO_SPEED_FREQ_LOW;
+//    GPIO_InitStruct.OutputType = LL_GPIO_OUTPUT_PUSHPULL;
+//    GPIO_InitStruct.Pull = LL_GPIO_PULL_NO;
+//    LL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 }
 
 #endif
@@ -329,9 +356,12 @@ void enableCorePeripherals()
     TMR1->swevt |= TMR_OVERFLOW_SWTRIG;
 #ifdef USE_RGB_LED
     LED_GPIO_init();
-    GPIOB->scr = LL_GPIO_PIN_8; // turn on red
-    GPIOB->clr = LL_GPIO_PIN_5;
-    GPIOB->clr = LL_GPIO_PIN_3; //
+		GPIOB->clr = GPIO_PINS_8; // turn on red
+    GPIOB->scr = GPIO_PINS_5;
+    GPIOB->scr = GPIO_PINS_3; //
+//    GPIOB->scr = LL_GPIO_PIN_8; // turn on red
+//    GPIOB->clr = LL_GPIO_PIN_5;
+//    GPIOB->clr = LL_GPIO_PIN_3; //
 #endif
 
 #ifndef BRUSHED_MODE

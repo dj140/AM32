@@ -1049,9 +1049,12 @@ void setInput()
         input = 0;
         bemf_timeout_happened = 102;
 #ifdef USE_RGB_LED
-        GPIOB->BRR = LL_GPIO_PIN_8; // on red
-        GPIOB->BSRR = LL_GPIO_PIN_5; //
-        GPIOB->BSRR = LL_GPIO_PIN_3;
+				GPIOB->clr = GPIO_PINS_8; // turn on red
+				GPIOB->scr = GPIO_PINS_5;
+				GPIOB->scr = GPIO_PINS_3; //
+//        GPIOB->BRR = LL_GPIO_PIN_8; // on red
+//        GPIOB->BSRR = LL_GPIO_PIN_5; //
+//        GPIOB->BSRR = LL_GPIO_PIN_3;
 #endif
     } else {
 #ifdef FIXED_DUTY_MODE
@@ -1262,9 +1265,12 @@ void tenKhzRoutine()
                             send_LED_RGB(0, 255, 0);
 #endif
 #ifdef USE_RGB_LED
-                            GPIOB->BRR = LL_GPIO_PIN_3; // turn on green
-                            GPIOB->BSRR = LL_GPIO_PIN_8; // turn on green
-                            GPIOB->BSRR = LL_GPIO_PIN_5;
+														GPIOB->clr = GPIO_PINS_5; // turn on green
+														GPIOB->scr = GPIO_PINS_8;
+														GPIOB->scr = GPIO_PINS_3; 
+//                            GPIOB->BRR = LL_GPIO_PIN_3; // turn on green
+//                            GPIOB->BSRR = LL_GPIO_PIN_8; // turn on green
+//                            GPIOB->BSRR = LL_GPIO_PIN_5;
 #endif
                             if ((cell_count == 0) && LOW_VOLTAGE_CUTOFF) {
                                 cell_count = battery_voltage / 370;

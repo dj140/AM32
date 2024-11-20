@@ -520,6 +520,7 @@
 #define HARDWARE_GROUP_AT_B
 #define HARDWARE_GROUP_AT_045
 #define USE_SERIAL_TELEMETRY
+#define USE_RGB_LED
 #endif
 
 #ifdef  XROTOR45_F421
